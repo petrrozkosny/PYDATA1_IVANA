@@ -1,0 +1,21 @@
+import ipywidgets as widgets
+import pandas as pd
+import io
+
+output = widgets.Output()
+# Akceptujeme pouze jeden .xlsx soubor
+tlacitko_nahrani_souboru = widgets.FileUpload(accept='.xlsx', multiple=False, description='Nahrát soubor')
+tlacitko_potvrd = widgets.Button(description='Potvrdit')
+
+def nahraj_soubor(change):
+    global df
+    output.clear_output()
+    content = tlacitko_nahrani_souboru.value[0]['content']
+    content_str = io.BytesIO(content)
+    print('nahravam soubor')
+    df = pd.read_excel(content_str,nrows=10)
+    with output:
+        display(df.head())
+
+tlacitko_potvrd.on_click(nahraj_soubor)
+display(tlacitko_nahrani_souboru, tlacitko_potvrd, output)
