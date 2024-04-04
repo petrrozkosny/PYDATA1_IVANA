@@ -1,15 +1,20 @@
-df = pd.read_excel(cesta_souboru,skiprows=2)
-df = df.drop(0,axis=0)
-df = df[['Program','IČ','PSČ příjemce','Projekt s právním aktem o poskytnutí / převodu podpor','Datum zahájení fyzické operace',\
-         'Skutečné datum ukončení fyzické realizace operace','Kód NUTS 3','Celkové způsobilé výdaje přidělené na operaci (CZK)',\
-         'Finanční prostředky vyúčtované v žádostech o platbu (celkové způsobilé výdaje, CZK)'
-         
-         ]]
+import ipywidgets as widgets    
 
-df.rename(columns={'Celkové způsobilé výdaje přidělené na operaci (CZK)':'CZV','Finanční prostředky vyúčtované v žádostech o platbu (celkové způsobilé výdaje, CZK)':'ZOP',\
-                   'Datum zahájení fyzické operace':'Zahájení','Skutečné datum ukončení fyzické realizace operace': 'Ukončení',\
-                   'Projekt s právním aktem o poskytnutí / převodu podpor':'PA',\
-                   'PSČ příjemce':'PSČ'},inplace=True)
-df.dropna(subset=['Zahájení','Ukončení'],inplace=True)
-df['Zahájení'] = pd.to_datetime(df['Zahájení'],errors='coerce')
-df['Ukončení'] = pd.to_datetime(df['Ukončení'],errors='coerce')
+output = widgets.Output()
+
+
+df = df.loc[df['Zahájení'].notnull()]
+df['Zahájení ROK'] = df['Zahájení'].dt.year
+df['Zahájení ROK'] = df['Zahájení ROK'].astype('int64')
+
+
+list_rok = df['Zahájení ROK'].unique()  
+widget_rok = widgets.Dropdown(options=list_rok,description='Rok:',disabled=False)
+
+def filtruj(change):
+    with output:
+        output.clear_output()
+
+        display(df[df['Zahájení ROK'] == change.new])
+
+display(widget_rok,output)  
