@@ -1,3 +1,4 @@
+
 import ipywidgets as widgets    
 
 output = widgets.Output()
@@ -6,10 +7,12 @@ output = widgets.Output()
 df = df.loc[df['Zahájení'].notnull()]
 df['Zahájení ROK'] = df['Zahájení'].dt.year
 df['Zahájení ROK'] = df['Zahájení ROK'].astype('int64')
+df.sort_values(by='Zahájení ROK',ascending=True,inplace=True)
 
 
 list_rok = df['Zahájení ROK'].unique()  
-widget_rok = widgets.Dropdown(options=list_rok,description='Rok:',disabled=False)
+widget_rok = widgets.Dropdown(options=list_rok,description='Rok:',disabled=False)#
+#widget_text = widgets.Text(value='Zde bude zobrazen výpis',disabled=False)
 
 def filtruj(change):
     with output:
@@ -17,4 +20,6 @@ def filtruj(change):
 
         display(df[df['Zahájení ROK'] == change.new])
 
+
+widget_rok.observe(filtruj,names='value')
 display(widget_rok,output)  
