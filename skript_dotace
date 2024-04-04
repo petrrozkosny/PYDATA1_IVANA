@@ -1,0 +1,7 @@
+df = pd.read_excel(cesta_souboru,nrows=1000,skiprows=2)
+df = df.drop(0,axis=0)
+df = df[['Program','IČ','PSČ příjemce','Projekt s právním aktem o poskytnutí / převodu podpor','Datum zahájení fyzické operace',\
+         'Skutečné datum ukončení fyzické realizace operace','Kód NUTS 3','Celkové způsobilé výdaje přidělené na operaci (CZK)',\
+         'Finanční prostředky vyúčtované v žádostech o platbu (celkové způsobilé výdaje, CZK)'
+         
+         ]]
