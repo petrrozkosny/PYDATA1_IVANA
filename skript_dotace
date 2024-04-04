@@ -1,4 +1,4 @@
-df = pd.read_excel(cesta_souboru,nrows=1000,skiprows=2)
+df = pd.read_excel(cesta_souboru,skiprows=2)
 df = df.drop(0,axis=0)
 df = df[['Program','IČ','PSČ příjemce','Projekt s právním aktem o poskytnutí / převodu podpor','Datum zahájení fyzické operace',\
          'Skutečné datum ukončení fyzické realizace operace','Kód NUTS 3','Celkové způsobilé výdaje přidělené na operaci (CZK)',\
@@ -10,3 +10,6 @@ df.rename(columns={'Celkové způsobilé výdaje přidělené na operaci (CZK)':
                    'Datum zahájení fyzické operace':'Zahájení','Skutečné datum ukončení fyzické realizace operace': 'Ukončení',\
                    'Projekt s právním aktem o poskytnutí / převodu podpor':'PA',\
                    'PSČ příjemce':'PSČ'},inplace=True)
+df.dropna(subset=['Zahájení','Ukončení'],inplace=True)
+df['Zahájení'] = pd.to_datetime(df['Zahájení'],errors='coerce')
+df['Ukončení'] = pd.to_datetime(df['Ukončení'],errors='coerce')
