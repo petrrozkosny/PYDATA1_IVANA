@@ -5,3 +5,8 @@ df = df[['Program','IČ','PSČ příjemce','Projekt s právním aktem o poskytnu
          'Finanční prostředky vyúčtované v žádostech o platbu (celkové způsobilé výdaje, CZK)'
          
          ]]
+
+df.rename(columns={'Celkové způsobilé výdaje přidělené na operaci (CZK)':'CZV','Finanční prostředky vyúčtované v žádostech o platbu (celkové způsobilé výdaje, CZK)':'ZOP',\
+                   'Datum zahájení fyzické operace':'Zahájení','Skutečné datum ukončení fyzické realizace operace': 'Ukončení',\
+                   'Projekt s právním aktem o poskytnutí / převodu podpor':'PA',\
+                   'PSČ příjemce':'PSČ'},inplace=True)
