@@ -1,0 +1,26 @@
+# Buňka pro body 10-14
+
+df_agregovano = df_filtrovano.groupby(by='YEAR')['PRCP'].sum()
+df_agregovano = df_agregovano.sort_index(ascending=True)
+
+# varianta 1
+max_srazky = df_agregovano.max()
+min_srazky = df_agregovano.min()
+df_agregovano_rok_max_srazky = df_agregovano.loc[df_agregovano == max_srazky].index.values
+df_agregovano_rok_min_srazky = df_agregovano.loc[df_agregovano == min_srazky].index.values
+print(f'maximalni srazky: {max_srazky}')
+print(f'rok s nejvetsim mnozstvim srazek: {df_agregovano_rok_max_srazky}')
+print(f'minimalni srazky: {min_srazky}')
+print(f'rok s nejmensim mnozstvim srazek: {df_agregovano_rok_min_srazky}')
+
+
+# # varianta 2
+# df_agregovano = df_agregovano.reset_index()
+# max_srazky = df_agregovano['PRCP'].max()
+# min_srazky = df_agregovano['PRCP'].min()
+# df_agregovano_rok_max_srazky = df_agregovano.loc[df_agregovano['PRCP'] == max_srazky]['YEAR'].values
+# df_agregovano_rok_min_srazky = df_agregovano.loc[df_agregovano['PRCP'] == min_srazky]['YEAR'].values
+# print(f'maximalni srazky: {max_srazky}')
+# print(f'rok s nejvetsim mnozstvim srazek: {df_agregovano_rok_max_srazky}')
+# print(f'minimalni srazky: {min_srazky}')
+# print(f'rok s nejmensim mnozstvim srazek: {df_agregovano_rok_min_srazky}')
