@@ -1,0 +1,17 @@
+# Buňka pro body 17-20
+
+df_kategorie = df.copy()
+df_kategorie['INTERVAL'] =pd.cut(df['PRCP'],bins= [-np.inf,0,5,10,np.inf],labels =['neprselo','prselo malo','prselo akorat','prselo moc'] )
+df_kategorie = df_kategorie.groupby(by=['YEAR','NAME','INTERVAL'])['DATE'].count()
+# # Varianta 1
+# df_kategorie = df_kategorie.loc[df_kategorie.index.get_level_values('INTERVAL') == 'prselo moc']
+# df_kategorie_max = df_kategorie.max()
+# df_kategorie_max_rok_name = df_kategorie.loc[df_kategorie == df_kategorie_max].index.values
+# df_kategorie_max_rok_name
+
+# Varianta 2
+df_kategorie = df_kategorie.reset_index()
+df_kategorie = df_kategorie.loc[df_kategorie['INTERVAL'] == 'prselo moc']
+df_kategorie_max = df_kategorie['DATE'].max()
+df_kategorie_max_rok_name = df_kategorie.loc[df_kategorie['DATE'] == df_kategorie_max]
+df_kategorie_max_rok_name[['YEAR','NAME']]
