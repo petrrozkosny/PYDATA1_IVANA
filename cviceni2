@@ -1,0 +1,15 @@
+# Buňka pro body 6-8
+
+df_ruzyne = df.loc[df['NAME'] == 'RUZYNE'].reset_index(drop=True)
+df_mosnov = df.loc[df['NAME'] == 'MOSNOV'].reset_index(drop=True)
+
+korelacni_koeficient = df_ruzyne['TMAX'].corr(df_mosnov['TMAX'])
+
+df_spojeno = pd.merge(df_ruzyne[['DATE','TMAX']],df_mosnov[['DATE','TMAX']],on='DATE',suffixes=('_RUZYNE','_MOSNOV'))
+korelacni_koeficient2 =df_spojeno['TMAX_RUZYNE'].corr(df_spojeno['TMAX_MOSNOV'])
+
+df_kumulativni_srazky_ruzyne_2020 = df.loc[(df['NAME'] == 'RUZYNE') &(df['YEAR']==2020)]['PRCP'].cumsum()
+df_kumulativni_srazky_ruzyne_2020.plot()
+
+print(f'korelacni koeficient: {korelacni_koeficient}')
+print(f'korelacni koeficient2: {korelacni_koeficient2}')
